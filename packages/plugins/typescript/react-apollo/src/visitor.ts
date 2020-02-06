@@ -97,7 +97,10 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
     this.imports.add(this.getApolloReactCommonImport());
     this.imports.add(this.getApolloReactHocImport());
 
-    return `ApolloReactHoc.${argType}<${typeVariableName}, ${variablesVarName}>`;
+    // As we are using `props` option, it replaces Query/Mutation returned value
+    //  and there is no `data/mutation` prop anymore
+    // ApolloReactHoc.MutateProps/DataProps asks for these properties to be present
+    return `Partial<ApolloReactHoc.${argType}<${typeVariableName}, ${variablesVarName}>>`;
   }
 
   private _buildMutationFn(node: OperationDefinitionNode, operationResultType: string, operationVariablesTypes: string): string {
@@ -172,7 +175,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
 
     const queryDescription = `
  * To run a query within a React component, call \`use${operationName}\` and pass it any options that fit your needs.
- * When your component renders, \`use${operationName}\` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, \`use${operationName}\` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.`;
 
     const queryExample = `

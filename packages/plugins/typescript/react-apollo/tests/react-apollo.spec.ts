@@ -775,7 +775,7 @@ query MyFeed {
         }
       )) as Types.ComplexPluginOutput;
 
-      expect(content.content).toBeSimilarStringTo(`export type TestProps<TChildProps = {}> = ApolloReactHoc.DataProps<TestQuery, TestQueryVariables> & TChildProps;`);
+      expect(content.content).toBeSimilarStringTo(`export type TestProps<TChildProps = {}> = Partial<ApolloReactHoc.DataProps<TestQuery, TestQueryVariables>> & TChildProps;`);
 
       expect(content.content).toBeSimilarStringTo(`export function withTest<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
@@ -801,7 +801,7 @@ query MyFeed {
         }
       )) as Types.ComplexPluginOutput;
 
-      expect(content.content).toBeSimilarStringTo(`export type TestProps<TChildProps = {}> = ApolloReactHoc.DataProps<TestQueryResponse, TestQueryVariables> & TChildProps;`);
+      expect(content.content).toBeSimilarStringTo(`export type TestProps<TChildProps = {}> = Partial<ApolloReactHoc.DataProps<TestQueryResponse, TestQueryVariables>> & TChildProps;`);
 
       await validateTypeScript(content, schema, docs, {});
     });
@@ -1065,7 +1065,7 @@ export function useListenToCommentsSubscription(baseOptions?: ApolloReactHooks.S
  * __useFeedQuery__
  *
  * To run a query within a React component, call \`useFeedQuery\` and pass it any options that fit your needs.
- * When your component renders, \`useFeedQuery\` returns an object from Apollo Client that contains loading, error, and data properties 
+ * When your component renders, \`useFeedQuery\` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
